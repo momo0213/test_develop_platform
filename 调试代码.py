@@ -38,8 +38,7 @@ request = SendRequest()
 # em = random_email()
 url = conf.get("env", "url") + case["url"]
 
-# case[0]["data"] = case[0]["data"].replace("@username@",user)
-# case[0]["data"] = case[0]["data"].replace("@email@",em)
+
 case["data"] = CaseData.replace_data(case["data"])
 case["data"] = case["data"].replace("@testcases@",random_testcases())
 data = eval(case["data"])
