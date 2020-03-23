@@ -1,0 +1,2354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测开平台测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 120%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">测开平台测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> Sunny</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-03-23 23:02:35</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:55.730600</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 98，通过 84，失败 13，错误 1，通过率= 85.71%</p>
+
+<p class='description'>用户模块，创建项目、接口、用例的测试</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 85.71% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 13 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 84 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 98 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 16px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>test01_register.TestRegister</td>
+    <td class="text-center">16</td>
+    <td class="text-center">15</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',16)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_01: 注册成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" align="left">
+    <pre>
+    
+pt1_1: {'username': 'xoqQpS', 'email': 'jm9b@126.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': 'xoqQpS'}
+实际结果 {'id': 583, 'username': 'xoqQpS', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1ODMsInVzZXJuYW1lIjoieG9xUXBTIiwiZXhwIjoxNTg1MDYyMTMyLCJlbWFpbCI6ImptOWJAMTI2LmNvbSJ9.Gn6qCeH2McCRUKlC1HpsTULrUHngAljPUaRjn0qUgtA'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_02: 注册失败-用户名为空字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in" align="left">
+    <pre>
+    
+pt1_2: {'email': 'ut3a@qq.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': ['该字段是必填项。']}
+实际结果 {'username': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_3' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_03: 注册失败-用户名为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
+    <div id='div_ft1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
+    <div id='div_ft1_3' class="collapse in" align="left">
+    <pre>
+    
+ft1_3: {'username': 54565334, 'email': 'Kutz@qq.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': ['该字段类型错误']}
+实际结果 {'username': ['已存在一位使用该名字的用户。']}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test01_register.py", line 66, in test_register
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test01_register.py", line 54, in test_register
+    self.assertEqual(res["username"],expected["username"])
+AssertionError: Lists differ: ['已存在一位使用该名字的用户。'] != ['该字段类型错误']
+
+First differing element 0:
+'已存在一位使用该名字的用户。'
+'该字段类型错误'
+
+- ['已存在一位使用该名字的用户。']
++ ['该字段类型错误']
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_04: 注册失败-邮箱为空字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" align="left">
+    <pre>
+    
+pt1_4: {'username': 'FnwZGB', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'email': ['该字段是必填项。']}
+实际结果 {'email': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_05: 注册失败-密码为空字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse in" align="left">
+    <pre>
+    
+pt1_5: {'username': 'xwSHzQ', 'email': 'rqci@qq.com', 'password_confirm': '123456'}
+预期结果 {'password': ['该字段是必填项。']}
+实际结果 {'password': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_06: 注册失败-确认密码为空字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse in" align="left">
+    <pre>
+    
+pt1_6: {'username': '1P0289', 'email': 'aDYK@163.com', 'password': '123456'}
+预期结果 {'password_confirm': ['该字段是必填项。']}
+实际结果 {'password_confirm': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_07: 注册失败-用户名已注册</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse in" align="left">
+    <pre>
+    
+pt1_7: {'username': 'xoqQpS', 'email': 'CNMD@126.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': ['已存在一位使用该名字的用户。']}
+实际结果 {'username': ['已存在一位使用该名字的用户。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_08: 注册失败-用户名少于6位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse in" align="left">
+    <pre>
+    
+pt1_8: {'username': 'sunny', 'email': 'jg7r@163.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': ['仅允许6-20个字符的用户名']}
+实际结果 {'username': ['仅允许6-20个字符的用户名']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_09: 注册失败-用户名大于20位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse in" align="left">
+    <pre>
+    
+pt1_9: {'username': 'sunny1111111122222111', 'email': 'z24c@126.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'username': ['仅允许6-20个字符的用户名']}
+实际结果 {'username': ['仅允许6-20个字符的用户名']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_10: 注册失败-邮箱已注册</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse in" align="left">
+    <pre>
+    
+pt1_10: {'username': '7xeKrY', 'email': 'jm9b@126.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'email': ['此邮箱已注册']}
+实际结果 {'email': ['此邮箱已注册']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_11: 注册失败-邮箱不符合标准格式</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse in" align="left">
+    <pre>
+    
+pt1_11: {'username': 'BdItFj', 'email': '123422#qq.com', 'password': '123456', 'password_confirm': '123456'}
+预期结果 {'email': ['请输入合法的邮件地址。']}
+实际结果 {'email': ['请输入合法的邮件地址。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_12: 注册失败-密码长度小于6位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse in" align="left">
+    <pre>
+    
+pt1_12: {'username': 'kORjxo', 'email': 'C582@qq.com', 'password': '12345', 'password_confirm': '123466'}
+预期结果 {'password': ['仅允许6-20个字符的密码']}
+实际结果 {'password': ['仅允许6-20个字符的密码']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_13: 注册失败-密码长度大于20位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse in" align="left">
+    <pre>
+    
+pt1_13: {'username': 'zRg81t', 'email': 'SJrz@126.com', 'password': '123456123456123456123', 'password_confirm': '123456'}
+预期结果 {'password': ['仅允许6-20个字符的密码']}
+实际结果 {'password': ['仅允许6-20个字符的密码']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_14: 注册失败-确认密码长度小于6位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse in" align="left">
+    <pre>
+    
+pt1_14: {'username': 'FdGcZz', 'email': 'HSoe@163.com', 'password': '123456', 'password_confirm': '1234'}
+预期结果 {'password_confirm': ['仅允许6~20个字符的确认密码']}
+实际结果 {'password_confirm': ['仅允许6~20个字符的确认密码']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_15: 注册失败-确认密码长度大于20位</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse in" align="left">
+    <pre>
+    
+pt1_15: {'username': 'vgmOQ7', 'email': 'htng@qq.com', 'password': '123456', 'password_confirm': '123456123456123456789'}
+预期结果 {'password_confirm': ['仅允许6~20个字符的确认密码']}
+实际结果 {'password_confirm': ['仅允许6~20个字符的确认密码']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_16: 注册失败-密码和确认密码不一致</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse in" align="left">
+    <pre>
+    
+pt1_16: {'username': '6eHZNX', 'email': '8Pmr@163.com', 'password': '123456', 'password_confirm': '123470'}
+预期结果 {'non_field_errors': ['两次输入密码不正确']}
+实际结果 {'non_field_errors': ['两次输入密码不正确']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test02_username_email.TestUser</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',4)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_user_1: 用户已注册接口</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in" align="left">
+    <pre>
+    
+pt2_1: 预期结果 {'count': 1}
+实际结果 {'username': 'sunny01', 'count': 1}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_user_2: 用户未注册接口</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in" align="left">
+    <pre>
+    
+pt2_2: 预期结果 {'count': 0}
+实际结果 {'username': 'momo3829', 'count': 0}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_user_3: 用户已注册邮箱</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in" align="left">
+    <pre>
+    
+pt2_3: 预期结果 {'count': 1}
+实际结果 {'email': '418040021@qq.com', 'count': 1}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_user_4: 用户未注册邮箱</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse in" align="left">
+    <pre>
+    
+pt2_4: 预期结果 {'count': 0}
+实际结果 {'email': 'smlw@126.com', 'count': 0}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test03_login.TestLogin</td>
+    <td class="text-center">6</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',6)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_1: 登录成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in" align="left">
+    <pre>
+    
+pt3_1: 预期结果： {'username': 'sunny01'}
+实际结果： {'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNDcsInVzZXJuYW1lIjoic3VubnkwMSIsImV4cCI6MTU4NTA2MjE0MywiZW1haWwiOiIxMTE3MkAxNjMuY29tIn0.X339UXOYzs0BlWZNBBNnImAHYw_v5O7PWw1uKWYqQ0M', 'user_id': 147, 'username': 'sunny01'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_2: 用户名为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse in" align="left">
+    <pre>
+    
+pt3_2: 预期结果： {'username': ['该字段是必填项。']}
+实际结果： {'username': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_3: 密码为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse in" align="left">
+    <pre>
+    
+pt3_3: 预期结果： {'password': ['该字段是必填项。']}
+实际结果： {'password': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_4: 用户名未注册</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse in" align="left">
+    <pre>
+    
+pt3_4: 预期结果： {'non_field_errors': ['无法使用提供的认证信息登录。']}
+实际结果： {'non_field_errors': ['无法使用提供的认证信息登录。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_5: 密码错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse in" align="left">
+    <pre>
+    
+pt3_5: 预期结果： {'non_field_errors': ['无法使用提供的认证信息登录。']}
+实际结果： {'non_field_errors': ['无法使用提供的认证信息登录。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_login_6: 用户名为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_6'>错误</button>
+    <div id='div_ft3_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_6'>错误</button>
+    <div id='div_ft3_6' class="collapse in" align="left">
+    <pre>
+    
+ft3_6: Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test03_login.py", line 30, in test_login
+    data = eval(case["data"])
+  File "&lt;string&gt;", line 1
+    {"username":01223423,"password":"123456"}
+                       ^
+SyntaxError: invalid token
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>test04_projects.TestProjects</td>
+    <td class="text-center">26</td>
+    <td class="text-center">20</td>
+    <td class="text-center">6</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',26)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_01: 新增项目成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in" align="left">
+    <pre>
+    
+pt4_1: 预期结果 {'name': '新增项目5636'}
+实际结果 {'id': 952, 'create_time': '2020-03-23T23:02:27.143200+08:00', 'name': '新增项目5636', 'leader': 'Sunny', 'tester': '张三', 'programmer': '李四', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_02: 新增失败—项目名称大于200个字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse in" align="left">
+    <pre>
+    
+pt4_2: 预期结果 {'name': ['请确保这个字段不能超过 200 个字符。']}
+实际结果 {'name': ['请确保这个字段不能超过 200 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_03: 新增成功—项目名称包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_3'>通过</button>
+    <div id='div_pt4_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_3'>通过</button>
+    <div id='div_pt4_3' class="collapse in" align="left">
+    <pre>
+    
+pt4_3: 预期结果 {'name': '新增项目5172+￥%&amp;。！'}
+实际结果 {'id': 953, 'create_time': '2020-03-23T23:02:28.043027+08:00', 'name': '新增项目5172+￥%&amp;。！', 'leader': '可优', 'tester': '某人', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_04: 新增失败—项目名称重复</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_4'>通过</button>
+    <div id='div_pt4_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_4'>通过</button>
+    <div id='div_pt4_4' class="collapse in" align="left">
+    <pre>
+    
+pt4_4: 预期结果 {'name': ['具有 项目名称 的 项目信息 已存在。']}
+实际结果 {'name': ['具有 项目名称 的 项目信息 已存在。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_5' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_05: 新增失败—项目名称为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_5'>失败</button>
+    <div id='div_ft4_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_5'>失败</button>
+    <div id='div_ft4_5' class="collapse in" align="left">
+    <pre>
+    
+ft4_5: 预期结果 {'name': ['参数类型错误。']}
+实际结果 {'name': ['具有 项目名称 的 项目信息 已存在。']}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 73, in test_projects
+    self.assertEqual(expected["name"],res["name"])
+AssertionError: Lists differ: ['参数类型错误。'] != ['具有 项目名称 的 项目信息 已存在。']
+
+First differing element 0:
+'参数类型错误。'
+'具有 项目名称 的 项目信息 已存在。'
+
+- ['参数类型错误。']
++ ['具有 项目名称 的 项目信息 已存在。']
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_06: 新增失败—项目名称为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_6'>通过</button>
+    <div id='div_pt4_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_6'>通过</button>
+    <div id='div_pt4_6' class="collapse in" align="left">
+    <pre>
+    
+pt4_6: 预期结果 {'name': ['该字段是必填项。']}
+实际结果 {'name': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_07: 新增失败—项目负责人长度超过50</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_7'>通过</button>
+    <div id='div_pt4_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_7'>通过</button>
+    <div id='div_pt4_7' class="collapse in" align="left">
+    <pre>
+    
+pt4_7: 预期结果 {'leader': ['请确保这个字段不能超过 50 个字符。']}
+实际结果 {'leader': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_8' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_08: 新增失败—项目负责人字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_8'>失败</button>
+    <div id='div_ft4_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_8'>失败</button>
+    <div id='div_ft4_8' class="collapse in" align="left">
+    <pre>
+    
+ft4_8: 预期结果 {'leader': ['参数类型错误。']}
+实际结果 {'id': 954, 'create_time': '2020-03-23T23:02:30.343177+08:00', 'name': '新增项目7832', 'leader': '54397821', 'tester': '某人', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 63, in test_projects
+    self.assertEqual(expected["leader"], res["leader"])
+AssertionError: ['参数类型错误。'] != '54397821'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_09: 新增失败—项目负责人字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_9'>通过</button>
+    <div id='div_pt4_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_9'>通过</button>
+    <div id='div_pt4_9' class="collapse in" align="left">
+    <pre>
+    
+pt4_9: 预期结果 {'leader': ['该字段是必填项。']}
+实际结果 {'leader': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_10: 新增成功—项目负责人字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_10'>通过</button>
+    <div id='div_pt4_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_10'>通过</button>
+    <div id='div_pt4_10' class="collapse in" align="left">
+    <pre>
+    
+pt4_10: 预期结果 {'name': '新增项目3299'}
+实际结果 {'id': 955, 'create_time': '2020-03-23T23:02:31.282578+08:00', 'name': '新增项目3299', 'leader': '新增项目3299#￥%&amp;*', 'tester': '某人', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_11: 新增失败—测试负责人长度超过50</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_11'>通过</button>
+    <div id='div_pt4_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_11'>通过</button>
+    <div id='div_pt4_11' class="collapse in" align="left">
+    <pre>
+    
+pt4_11: 预期结果 {'tester': ['请确保这个字段不能超过 50 个字符。']}
+实际结果 {'tester': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_12' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_12: 新增失败—测试负责人字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_12'>失败</button>
+    <div id='div_ft4_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_12'>失败</button>
+    <div id='div_ft4_12' class="collapse in" align="left">
+    <pre>
+    
+ft4_12: 预期结果 {'tester': ['参数类型错误。']}
+实际结果 {'id': 956, 'create_time': '2020-03-23T23:02:32.232489+08:00', 'name': '新增项目3667', 'leader': 'Sunny', 'tester': '111', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 65, in test_projects
+    self.assertEqual(expected["tester"], res["tester"])
+AssertionError: ['参数类型错误。'] != '111'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_13: 新增失败—测试负责人字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_13'>通过</button>
+    <div id='div_pt4_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_13'>通过</button>
+    <div id='div_pt4_13' class="collapse in" align="left">
+    <pre>
+    
+pt4_13: 预期结果 {'tester': ['该字段是必填项。']}
+实际结果 {'tester': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_14: 新增成功—测试负责人字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_14'>通过</button>
+    <div id='div_pt4_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_14'>通过</button>
+    <div id='div_pt4_14' class="collapse in" align="left">
+    <pre>
+    
+pt4_14: 预期结果 {'name': '新增项目9373'}
+实际结果 {'id': 957, 'create_time': '2020-03-23T23:02:33.143328+08:00', 'name': '新增项目9373', 'leader': '今个儿真开心', 'tester': '新增项目9373#￥%&amp;*', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_15: 新增失败—开发人员长度超过50</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_15'>通过</button>
+    <div id='div_pt4_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_15'>通过</button>
+    <div id='div_pt4_15' class="collapse in" align="left">
+    <pre>
+    
+pt4_15: 预期结果 {'programmer': ['请确保这个字段不能超过 50 个字符。']}
+实际结果 {'programmer': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_16' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_16: 新增失败—开发人员字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_16'>失败</button>
+    <div id='div_ft4_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_16'>失败</button>
+    <div id='div_ft4_16' class="collapse in" align="left">
+    <pre>
+    
+ft4_16: 预期结果 {'programmer': ['参数类型错误。']}
+实际结果 {'id': 958, 'create_time': '2020-03-23T23:02:33.893174+08:00', 'name': '新增项目8319', 'leader': 'Sunny', 'tester': '111', 'programmer': '222', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 67, in test_projects
+    self.assertEqual(expected["programmer"], res["programmer"])
+AssertionError: ['参数类型错误。'] != '222'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_17: 新增失败—开发人员字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_17'>通过</button>
+    <div id='div_pt4_17' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_17'>通过</button>
+    <div id='div_pt4_17' class="collapse in" align="left">
+    <pre>
+    
+pt4_17: 预期结果 {'programmer': ['该字段是必填项。']}
+实际结果 {'programmer': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_18: 新增成功—开发人员字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_18'>通过</button>
+    <div id='div_pt4_18' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_18'>通过</button>
+    <div id='div_pt4_18' class="collapse in" align="left">
+    <pre>
+    
+pt4_18: 预期结果 {'name': '新增项目299'}
+实际结果 {'id': 959, 'create_time': '2020-03-23T23:02:34.762847+08:00', 'name': '新增项目299', 'leader': '今个儿真开心', 'tester': 'momo', 'programmer': '新增项目299#￥%&amp;*', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_19' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_19: 新增失败—发布应用字段长度超过100</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_19'>通过</button>
+    <div id='div_pt4_19' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_19'>通过</button>
+    <div id='div_pt4_19' class="collapse in" align="left">
+    <pre>
+    
+pt4_19: 预期结果 {'publish_app': ['请确保这个字段不能超过 100 个字符。']}
+实际结果 {'publish_app': ['请确保这个字段不能超过 100 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_20' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_20: 新增失败—发布应用字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_20'>失败</button>
+    <div id='div_ft4_20' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_20'>失败</button>
+    <div id='div_ft4_20' class="collapse in" align="left">
+    <pre>
+    
+ft4_20: 预期结果 {'publish_app': ['参数类型错误。']}
+实际结果 {'id': 960, 'create_time': '2020-03-23T23:02:35.702231+08:00', 'name': '新增项目7441', 'leader': '今个儿真开心', 'tester': 'momo', 'programmer': 'momo', 'publish_app': '222', 'desc': 'xxxx描述'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 69, in test_projects
+    self.assertEqual(expected["publish_app"], res["publish_app"])
+AssertionError: ['参数类型错误。'] != '222'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_21' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_21: 新增失败—发布应用字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_21'>通过</button>
+    <div id='div_pt4_21' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_21'>通过</button>
+    <div id='div_pt4_21' class="collapse in" align="left">
+    <pre>
+    
+pt4_21: 预期结果 {'publish_app': ['该字段是必填项。']}
+实际结果 {'publish_app': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_22' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_22: 新增成功—发布应用字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_22'>通过</button>
+    <div id='div_pt4_22' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_22'>通过</button>
+    <div id='div_pt4_22' class="collapse in" align="left">
+    <pre>
+    
+pt4_22: 预期结果 {'name': '新增项目5547'}
+实际结果 {'id': 961, 'create_time': '2020-03-23T23:02:36.433139+08:00', 'name': '新增项目5547', 'leader': '今个儿真开心', 'tester': 'sunny', 'programmer': '某人', 'publish_app': 'XXX应用#$%$^#', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_23' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_23: 新增失败—简要描述字段长度超过200</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_23'>通过</button>
+    <div id='div_pt4_23' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_23'>通过</button>
+    <div id='div_pt4_23' class="collapse in" align="left">
+    <pre>
+    
+pt4_23: 预期结果 {'desc': ['请确保这个字段不能超过 200 个字符。']}
+实际结果 {'desc': ['请确保这个字段不能超过 200 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_24' class='none'>
+    <td class='failCase'><div class='testcase'>test_projects_24: 新增失败—简要描述字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_24' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_24'>失败</button>
+    <div id='div_ft4_24' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_24' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_24'>失败</button>
+    <div id='div_ft4_24' class="collapse in" align="left">
+    <pre>
+    
+ft4_24: 预期结果 {'desc': ['参数类型错误。']}
+实际结果 {'id': 962, 'create_time': '2020-03-23T23:02:37.202757+08:00', 'name': '新增项目7944', 'leader': 'Sunny', 'tester': 'sunny', 'programmer': '某人', 'publish_app': '222', 'desc': '886'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 76, in test_projects
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test04_projects.py", line 71, in test_projects
+    self.assertEqual(expected["desc"], res["desc"])
+AssertionError: ['参数类型错误。'] != '886'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_25' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_25: 新增成功—简要描述字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_25' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_25'>通过</button>
+    <div id='div_pt4_25' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_25' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_25'>通过</button>
+    <div id='div_pt4_25' class="collapse in" align="left">
+    <pre>
+    
+pt4_25: 预期结果 {'name': '新增项目9981'}
+实际结果 {'id': 963, 'create_time': '2020-03-23T23:02:37.892745+08:00', 'name': '新增项目9981', 'leader': 'Sunny', 'tester': 'sunny', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': ''}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_26' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_projects_26: 新增成功—简要描述字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_26' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_26'>通过</button>
+    <div id='div_pt4_26' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_26' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_26'>通过</button>
+    <div id='div_pt4_26' class="collapse in" align="left">
+    <pre>
+    
+pt4_26: 预期结果 {'name': '新增项目2327'}
+实际结果 {'id': 964, 'create_time': '2020-03-23T23:02:38.612530+08:00', 'name': '新增项目2327', 'leader': '今个儿真开心', 'tester': 'sunny', 'programmer': '某人', 'publish_app': 'XXX应用', 'desc': 'xxxx描述$%&amp;^$'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>test05_interfaces.TestInterfaces</td>
+    <td class="text-center">18</td>
+    <td class="text-center">14</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',18)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_01: 新增项目成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in" align="left">
+    <pre>
+    
+pt5_1: 预期结果 {'name': '新增项目3768'}
+实际结果 {'id': 965, 'create_time': '2020-03-23T23:02:39.627936+08:00', 'name': '新增项目3768', 'leader': 'Sunny', 'tester': '张三', 'programmer': '李四', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_02: 创建成功-创建接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_2'>通过</button>
+    <div id='div_pt5_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_2'>通过</button>
+    <div id='div_pt5_2' class="collapse in" align="left">
+    <pre>
+    
+pt5_2: 预期结果 {'name': '创建接口5931'}
+实际结果 {'id': 784, 'name': '创建接口5931', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:40.078911+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_03: 创建成功-同一个项目关联多个接口</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse in" align="left">
+    <pre>
+    
+pt5_3: 预期结果 {'name': '创建接口3966'}
+实际结果 {'id': 785, 'name': '创建接口3966', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:40.898562+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_04: 创建失败-接口名称长度超过200个字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse in" align="left">
+    <pre>
+    
+pt5_4: 预期结果 {'name': ['请确保这个字段不能超过 200 个字符。']}
+实际结果 {'name': ['请确保这个字段不能超过 200 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_05: 创建失败-接口名称字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse in" align="left">
+    <pre>
+    
+pt5_5: 预期结果 {'name': ['该字段是必填项。']}
+实际结果 {'name': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_6' class='none'>
+    <td class='failCase'><div class='testcase'>test_interfaces_06: 创建失败-接口名称字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_6'>失败</button>
+    <div id='div_ft5_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_6'>失败</button>
+    <div id='div_ft5_6' class="collapse in" align="left">
+    <pre>
+    
+ft5_6: 预期结果 {'name': ['参数类型错误。']}
+实际结果 {'name': ['具有 接口名称 的 接口信息 已存在。']}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 83, in test_interfaces
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 80, in test_interfaces
+    self.assertEqual(expected["name"], res["name"])
+AssertionError: Lists differ: ['参数类型错误。'] != ['具有 接口名称 的 接口信息 已存在。']
+
+First differing element 0:
+'参数类型错误。'
+'具有 接口名称 的 接口信息 已存在。'
+
+- ['参数类型错误。']
++ ['具有 接口名称 的 接口信息 已存在。']
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_07: 创建失败-接口名称重复</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse in" align="left">
+    <pre>
+    
+pt5_7: 预期结果 {'name': ['具有 接口名称 的 接口信息 已存在。']}
+实际结果 {'name': ['具有 接口名称 的 接口信息 已存在。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_08: 创建失败—测试负责人长度超过50</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_8'>通过</button>
+    <div id='div_pt5_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_8'>通过</button>
+    <div id='div_pt5_8' class="collapse in" align="left">
+    <pre>
+    
+pt5_8: 预期结果 {'tester': ['请确保这个字段不能超过 50 个字符。']}
+实际结果 {'tester': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_9' class='none'>
+    <td class='failCase'><div class='testcase'>test_interfaces_09: 创建失败—测试负责人字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_9'>失败</button>
+    <div id='div_ft5_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_9'>失败</button>
+    <div id='div_ft5_9' class="collapse in" align="left">
+    <pre>
+    
+ft5_9: 预期结果 {'tester': ['参数类型错误。']}
+实际结果 {'id': 786, 'name': '创建接口88', 'tester': '2222', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:45.069226+08:00'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 83, in test_interfaces
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 72, in test_interfaces
+    self.assertEqual(expected["tester"], res["tester"])
+AssertionError: ['参数类型错误。'] != '2222'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_10: 创建失败—测试负责人字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_10'>通过</button>
+    <div id='div_pt5_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_10'>通过</button>
+    <div id='div_pt5_10' class="collapse in" align="left">
+    <pre>
+    
+pt5_10: 预期结果 {'tester': ['该字段是必填项。']}
+实际结果 {'tester': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_11: 创建成功—测试负责人字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_11'>通过</button>
+    <div id='div_pt5_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_11'>通过</button>
+    <div id='div_pt5_11' class="collapse in" align="left">
+    <pre>
+    
+pt5_11: 预期结果 {'name': '创建接口9279'}
+实际结果 {'id': 787, 'name': '创建接口9279', 'tester': 'Sunny#￥%……*', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:45.878428+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_12: 创建失败-项目id不存在</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_12'>通过</button>
+    <div id='div_pt5_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_12'>通过</button>
+    <div id='div_pt5_12' class="collapse in" align="left">
+    <pre>
+    
+pt5_12: 预期结果 {'project_id': ['无效主键']}
+实际结果 {'project_id': ['无效主键 “10965” － 对象不存在。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_13' class='none'>
+    <td class='failCase'><div class='testcase'>test_interfaces_13: 创建失败-项目id为字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_13'>失败</button>
+    <div id='div_ft5_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_13'>失败</button>
+    <div id='div_ft5_13' class="collapse in" align="left">
+    <pre>
+    
+ft5_13: 预期结果 {'project_id': ['参数类型错误。']}
+实际结果 {'id': 788, 'name': '创建接口3448', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:46.788174+08:00'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 83, in test_interfaces
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 74, in test_interfaces
+    self.assertEqual(expected["project_id"], res["project_id"])
+AssertionError: ['参数类型错误。'] != 965
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_14: 创建失败-项目id为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_14'>通过</button>
+    <div id='div_pt5_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_14'>通过</button>
+    <div id='div_pt5_14' class="collapse in" align="left">
+    <pre>
+    
+pt5_14: 预期结果 {'project_id': ['该字段是必填项。']}
+实际结果 {'project_id': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_15: 创建失败—简要描述字段长度超过200</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_15'>通过</button>
+    <div id='div_pt5_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_15'>通过</button>
+    <div id='div_pt5_15' class="collapse in" align="left">
+    <pre>
+    
+pt5_15: 预期结果 {'desc': ['请确保这个字段不能超过 200 个字符。']}
+实际结果 {'desc': ['请确保这个字段不能超过 200 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_16' class='none'>
+    <td class='failCase'><div class='testcase'>test_interfaces_16: 创建失败—简要描述字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_16'>失败</button>
+    <div id='div_ft5_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_16'>失败</button>
+    <div id='div_ft5_16' class="collapse in" align="left">
+    <pre>
+    
+ft5_16: 预期结果 {'desc': ['参数类型错误。']}
+实际结果 {'id': 789, 'name': '创建接口4717', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': '123456', 'create_time': '2020-03-23T23:02:47.988360+08:00'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 83, in test_interfaces
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test05_interfaces.py", line 76, in test_interfaces
+    self.assertEqual(expected["desc"], res["desc"])
+AssertionError: ['参数类型错误。'] != '123456'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_17: 创建成功—简要描述字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_17'>通过</button>
+    <div id='div_pt5_17' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_17'>通过</button>
+    <div id='div_pt5_17' class="collapse in" align="left">
+    <pre>
+    
+pt5_17: 预期结果 {'name': '创建接口5'}
+实际结果 {'id': 790, 'name': '创建接口5', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': None, 'create_time': '2020-03-23T23:02:48.498082+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_interfaces_18: 创建成功—简要描述字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_18'>通过</button>
+    <div id='div_pt5_18' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_18'>通过</button>
+    <div id='div_pt5_18' class="collapse in" align="left">
+    <pre>
+    
+pt5_18: 预期结果 {'name': '创建接口3755'}
+实际结果 {'id': 791, 'name': '创建接口3755', 'tester': 'Sunny', 'project': '新增项目3768', 'project_id': 965, 'desc': '这是一个描述#￥%￥%……%￥？《》', 'create_time': '2020-03-23T23:02:48.878561+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>test06_creat.TestCreatCases</td>
+    <td class="text-center">21</td>
+    <td class="text-center">19</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',21)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_01: 新增项目成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in" align="left">
+    <pre>
+    
+pt6_1: 预期结果： {'name': '新增项目1421'}
+实际结果： {'id': 966, 'create_time': '2020-03-23T23:02:49.778075+08:00', 'name': '新增项目1421', 'leader': 'Sunny', 'tester': '张三', 'programmer': '李四', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_02: 创建成功-创建接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse in" align="left">
+    <pre>
+    
+pt6_2: 预期结果： {'name': '创建接口4888'}
+实际结果： {'id': 792, 'name': '创建接口4888', 'tester': 'Sunny', 'project': '新增项目1421', 'project_id': 966, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:02:50.359136+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_03: 创建成功-用例创建成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse in" align="left">
+    <pre>
+    
+pt6_3: 预期结果： {'name': '创建用例8033', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}}
+实际结果： {'id': 500, 'name': '创建用例8033', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_04: 创建失败-用例名称字段超过50个字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+    <div id='div_pt6_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+    <div id='div_pt6_4' class="collapse in" align="left">
+    <pre>
+    
+pt6_4: 预期结果： {'name': ['请确保这个字段不能超过 50 个字符。']}
+实际结果： {'name': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_5' class='none'>
+    <td class='failCase'><div class='testcase'>test_creatcases_05: 创建失败-用例名称字段为int类型</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_5'>失败</button>
+    <div id='div_ft6_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_5'>失败</button>
+    <div id='div_ft6_5' class="collapse in" align="left">
+    <pre>
+    
+ft6_5: 预期结果： {'name': ['参数类型错误。']}
+实际结果： {'name': ['具有 用例名称 的 用例信息 已存在。']}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test06_creat.py", line 87, in test_creatcases
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test06_creat.py", line 75, in test_creatcases
+    self.assertEqual(expected["name"], res["name"])
+AssertionError: Lists differ: ['参数类型错误。'] != ['具有 用例名称 的 用例信息 已存在。']
+
+First differing element 0:
+'参数类型错误。'
+'具有 用例名称 的 用例信息 已存在。'
+
+- ['参数类型错误。']
++ ['具有 用例名称 的 用例信息 已存在。']
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_06: 创建失败-用例名称重复</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+    <div id='div_pt6_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+    <div id='div_pt6_6' class="collapse in" align="left">
+    <pre>
+    
+pt6_6: 预期结果： {'name': ['具有 用例名称 的 用例信息 已存在。']}
+实际结果： {'name': ['具有 用例名称 的 用例信息 已存在。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_07: 创建失败-用例名称为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+    <div id='div_pt6_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+    <div id='div_pt6_7' class="collapse in" align="left">
+    <pre>
+    
+pt6_7: 预期结果： {'name': ['该字段是必填项。']}
+实际结果： {'name': ['该字段是必填项。'], 'include': ['Not a valid string.']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_08: 创建失败-所选接口不存在</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_8'>通过</button>
+    <div id='div_pt6_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_8'>通过</button>
+    <div id='div_pt6_8' class="collapse in" align="left">
+    <pre>
+    
+pt6_8: 预期结果： {'interface': {'iid': ['所选接口不存在!']}}
+实际结果： {'interface': {'iid': ['所选接口不存在!']}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_09: 创建失败-接口与项目信息不对应</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_9'>通过</button>
+    <div id='div_pt6_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_9'>通过</button>
+    <div id='div_pt6_9' class="collapse in" align="left">
+    <pre>
+    
+pt6_9: 预期结果： {'interface': {'non_field_errors': ['项目和接口信息不对应!']}}
+实际结果： {'interface': {'non_field_errors': ['项目和接口信息不对应!']}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_10: 创建失败-所选项目不存在</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_10'>通过</button>
+    <div id='div_pt6_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_10'>通过</button>
+    <div id='div_pt6_10' class="collapse in" align="left">
+    <pre>
+    
+pt6_10: 预期结果： {'interface': {'pid': ['所选项目不存在!']}}
+实际结果： {'interface': {'pid': ['所选项目不存在!']}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_11' class='none'>
+    <td class='failCase'><div class='testcase'>test_creatcases_11: 创建失败-所选项目和接口为字符串</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_11'>失败</button>
+    <div id='div_ft6_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_11'>失败</button>
+    <div id='div_ft6_11' class="collapse in" align="left">
+    <pre>
+    
+ft6_11: 预期结果： {'interface': {'iid': ['参数类型错误!']}}
+实际结果： {'id': 501, 'name': '创建用例5877', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优'}
+Traceback (most recent call last):
+  File "C:\sunny\test_develop_platform\library\ddt.py", line 151, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\sunny\test_develop_platform\testcases\test06_creat.py", line 87, in test_creatcases
+    raise e
+  File "C:\sunny\test_develop_platform\testcases\test06_creat.py", line 80, in test_creatcases
+    self.assertEqual(expected["interface"], res["interface"])
+AssertionError: {'iid': ['参数类型错误!']} != {'name': '创建接口4888', 'project': '新增项目1421'}
+- {'iid': ['参数类型错误!']}
++ {'name': '创建接口4888', 'project': '新增项目1421'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_12: 创建失败-所属接口和项目信息为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_12'>通过</button>
+    <div id='div_pt6_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_12'>通过</button>
+    <div id='div_pt6_12' class="collapse in" align="left">
+    <pre>
+    
+pt6_12: 预期结果： {'interface': ['该字段是必填项。']}
+实际结果： {'interface': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_13: 创建失败-所属接口为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_13'>通过</button>
+    <div id='div_pt6_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_13'>通过</button>
+    <div id='div_pt6_13' class="collapse in" align="left">
+    <pre>
+    
+pt6_13: 预期结果： {'interface': {'iid': ['该字段是必填项。']}}
+实际结果： {'interface': {'iid': ['该字段是必填项。']}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_14: 创建失败-所属项目信息为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_14'>通过</button>
+    <div id='div_pt6_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_14'>通过</button>
+    <div id='div_pt6_14' class="collapse in" align="left">
+    <pre>
+    
+pt6_14: 预期结果： {'interface': {'pid': ['该字段是必填项。']}}
+实际结果： {'interface': {'pid': ['该字段是必填项。']}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_15: 创建成功-用例执行前置顺序字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_15'>通过</button>
+    <div id='div_pt6_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_15'>通过</button>
+    <div id='div_pt6_15' class="collapse in" align="left">
+    <pre>
+    
+pt6_15: 预期结果： {'name': '创建用例323', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}}
+实际结果： {'id': 502, 'name': '创建用例323', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_16: 创建失败-编写人员字段超过50个字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_16'>通过</button>
+    <div id='div_pt6_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_16'>通过</button>
+    <div id='div_pt6_16' class="collapse in" align="left">
+    <pre>
+    
+pt6_16: 预期结果： {'author': ['请确保这个字段不能超过 50 个字符。']}
+实际结果： {'author': ['请确保这个字段不能超过 50 个字符。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_17: 创建失败-编写人员字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_17'>通过</button>
+    <div id='div_pt6_17' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_17'>通过</button>
+    <div id='div_pt6_17' class="collapse in" align="left">
+    <pre>
+    
+pt6_17: 预期结果： {'author': ['该字段是必填项。']}
+实际结果： {'author': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_18: 创建成功-编写人员字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_18'>通过</button>
+    <div id='div_pt6_18' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_18'>通过</button>
+    <div id='div_pt6_18' class="collapse in" align="left">
+    <pre>
+    
+pt6_18: 预期结果： {'name': '创建用例6376', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}}
+实际结果： {'id': 503, 'name': '创建用例6376', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优￥% ￥……'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_19' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_19: 创建成功-请求信息字段超过50个字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_19'>通过</button>
+    <div id='div_pt6_19' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_19'>通过</button>
+    <div id='div_pt6_19' class="collapse in" align="left">
+    <pre>
+    
+pt6_19: 预期结果： {'name': '创建用例508', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}}
+实际结果： {'id': 504, 'name': '创建用例508', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_20' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_20: 创建失败-请求信息字段为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_20'>通过</button>
+    <div id='div_pt6_20' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_20'>通过</button>
+    <div id='div_pt6_20' class="collapse in" align="left">
+    <pre>
+    
+pt6_20: 预期结果： {'request': ['该字段是必填项。']}
+实际结果： {'request': ['该字段是必填项。']}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_21' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_creatcases_21: 创建成功-请求信息字段包含特殊字符</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_21'>通过</button>
+    <div id='div_pt6_21' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_21'>通过</button>
+    <div id='div_pt6_21' class="collapse in" align="left">
+    <pre>
+    
+pt6_21: 预期结果： {'name': '创建用例8973', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}}
+实际结果： {'id': 505, 'name': '创建用例8973', 'interface': {'name': '创建接口4888', 'project': '新增项目1421'}, 'author': '可优'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test07_main_stream.TestMainStream</td>
+    <td class="text-center">7</td>
+    <td class="text-center">7</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',7)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_1: 用户注册</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in" align="left">
+    <pre>
+    
+pt7_1: {'id': 584, 'username': 'UbuEic', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1ODQsInVzZXJuYW1lIjoiVWJ1RWljIiwiZXhwIjoxNTg1MDYyMTgzLCJlbWFpbCI6Ik1tMFhAcXEuY29tIn0.RX7fowC9jf_azcGiymQ-AHCoi54RZkQuF_k-Ib_XHbY'}
+预期结果： {'username': 'UbuEic'}
+实际结果： {'id': 584, 'username': 'UbuEic', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1ODQsInVzZXJuYW1lIjoiVWJ1RWljIiwiZXhwIjoxNTg1MDYyMTgzLCJlbWFpbCI6Ik1tMFhAcXEuY29tIn0.RX7fowC9jf_azcGiymQ-AHCoi54RZkQuF_k-Ib_XHbY'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_2: 查看用户已注册的接口信息</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_2'>通过</button>
+    <div id='div_pt7_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_2'>通过</button>
+    <div id='div_pt7_2' class="collapse in" align="left">
+    <pre>
+    
+pt7_2: {'username': 'UbuEic', 'count': 1}
+预期结果： {'count': 1}
+实际结果： {'username': 'UbuEic', 'count': 1}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_3: 查看用户已注册的邮箱信息</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_3'>通过</button>
+    <div id='div_pt7_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_3'>通过</button>
+    <div id='div_pt7_3' class="collapse in" align="left">
+    <pre>
+    
+pt7_3: {'email': 'Mm0X@qq.com', 'count': 1}
+预期结果： {'count': 1}
+实际结果： {'email': 'Mm0X@qq.com', 'count': 1}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_4: 登录成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_4'>通过</button>
+    <div id='div_pt7_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_4'>通过</button>
+    <div id='div_pt7_4' class="collapse in" align="left">
+    <pre>
+    
+pt7_4: {'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1ODQsInVzZXJuYW1lIjoiVWJ1RWljIiwiZXhwIjoxNTg1MDYyMTg1LCJlbWFpbCI6Ik1tMFhAcXEuY29tIn0.uzbh7l4uiPvsONP2OYppH2KVs6nMjTnJ2NjY_t3py5s', 'user_id': 584, 'username': 'UbuEic'}
+预期结果： {'username': 'UbuEic'}
+实际结果： {'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1ODQsInVzZXJuYW1lIjoiVWJ1RWljIiwiZXhwIjoxNTg1MDYyMTg1LCJlbWFpbCI6Ik1tMFhAcXEuY29tIn0.uzbh7l4uiPvsONP2OYppH2KVs6nMjTnJ2NjY_t3py5s', 'user_id': 584, 'username': 'UbuEic'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_5: 新增项目</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_5'>通过</button>
+    <div id='div_pt7_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_5'>通过</button>
+    <div id='div_pt7_5' class="collapse in" align="left">
+    <pre>
+    
+pt7_5: {'id': 967, 'create_time': '2020-03-23T23:03:06.184200+08:00', 'name': '新增项目3517', 'leader': 'Sunny', 'tester': '张三', 'programmer': '李四', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+预期结果： {'name': '新增项目3517'}
+实际结果： {'id': 967, 'create_time': '2020-03-23T23:03:06.184200+08:00', 'name': '新增项目3517', 'leader': 'Sunny', 'tester': '张三', 'programmer': '李四', 'publish_app': 'XXX应用', 'desc': 'xxxx描述'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_6: 创建接口</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_6'>通过</button>
+    <div id='div_pt7_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_6'>通过</button>
+    <div id='div_pt7_6' class="collapse in" align="left">
+    <pre>
+    
+pt7_6: {'id': 793, 'name': '创建接口4869', 'tester': 'Sunny', 'project': '新增项目3517', 'project_id': 967, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:03:06.666221+08:00'}
+预期结果： {'name': '创建接口4869'}
+实际结果： {'id': 793, 'name': '创建接口4869', 'tester': 'Sunny', 'project': '新增项目3517', 'project_id': 967, 'desc': '这是一个描述', 'create_time': '2020-03-23T23:03:06.666221+08:00'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt7_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_main_stream_7: 创建用例</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_7'>通过</button>
+    <div id='div_pt7_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_7'>通过</button>
+    <div id='div_pt7_7' class="collapse in" align="left">
+    <pre>
+    
+pt7_7: {'id': 506, 'name': '创建用例1239', 'interface': {'name': '创建接口4869', 'project': '新增项目3517'}, 'author': '可优'}
+预期结果： {'name': '创建用例1239'}
+实际结果： {'id': 506, 'name': '创建用例1239', 'interface': {'name': '创建接口4869', 'project': '新增项目3517'}, 'author': '可优'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>98</td>
+    <td>84</td>
+    <td>13</td>
+    <td>1</td>
+    <td>通过率：85.71%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>
