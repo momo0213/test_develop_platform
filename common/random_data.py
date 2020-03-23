@@ -33,7 +33,7 @@ class RandomData(object):
     def random_interface():
         li = []
         for i in range(1,10001):
-            s = "sunny的创建接口"
+            s = "sunny创建接口"
             s+=str(i)
             li.append(s)
         res = random.choice(li)
@@ -43,7 +43,7 @@ class RandomData(object):
     def random_testcases():
         li = []
         for i in range(1, 10001):
-            s = "sunny的创建用例"
+            s = "sunny创建用例"
             s += str(i)
             li.append(s)
         res = random.choice(li)
