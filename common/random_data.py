@@ -23,7 +23,7 @@ class RandomData(object):
     def random_project():
         li = []
         for i in range(1,10001):
-            s = "sunny的新增项目"
+            s = "s的新增项目"
             s+=str(i)
             li.append(s)
         res = random.choice(li)
